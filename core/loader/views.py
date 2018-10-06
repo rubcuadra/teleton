@@ -8,6 +8,8 @@ from .models import *
 from .serializers import *
 from codecs import EncodedFile, BOM_UTF8
 import csv
+from bs4 import BeautifulSoup
+from datetime import datetime
 
 FILE_HEADER = "fisier"
 
@@ -29,6 +31,36 @@ class BanamexUploadViewSet(APIView):
                         bs.save()
                 return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TelmexUploadViewSet(APIView):
+    def post(self,request):
+        if FILE_HEADER in request.FILES:
+            f = request.FILES[FILE_HEADER]
+            if f:
+                try:    t = datetime.strptime(f.name, "Telmex_AcumEdo_%m%d%Y_%H%M.xls")
+                except: return Response({"msg":"WRONG FILE NAME"}, status=status.HTTP_400_BAD_REQUEST)    
+                doc = BeautifulSoup(f.read(), features="lxml")
+                skip = 1
+                for row in doc.find_all('tr'):
+                    if skip > 0:
+                        skip -= 1
+                        continue
+                    cells = row.find_all("td")
+
+                    estado = Estado.TelmexParser(cells[0].get_text().encode("ascii","ignore").strip())
+                    if estado == -1: break
+                    
+                    ts = TelmexSerializer(data={
+                        "Fecha": t,
+                        "Estado": estado,
+                        "Llamadas": int(cells[1].get_text()),
+                        "Importe": float(cells[2].get_text().strip("$").replace(",","")),
+                        "Porcentaje": float(cells[3].get_text().strip("%"))
+                    })
+                    if ts.is_valid(): ts.save()
+            return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
+        return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)    
 
 class SorianaUploadViewSet(APIView):
     def fix(self,row):
@@ -82,8 +114,13 @@ class CentrosViewSet(viewsets.ModelViewSet):
 class PacientesViewSet(viewsets.ModelViewSet):
     serializer_class = PacientesSerializer
     queryset = Pacientes.objects.all()
+    filter_fields = ("CL_ESTATUS",)
 
 class EstadoViewSet(viewsets.ModelViewSet):
     serializer_class = EstadoSerializer
     queryset = Estado.objects.all()
+
+class TelmexViewSet(viewsets.ModelViewSet):
+    serializer_class = TelmexSerializer
+    queryset = Telmex.objects.all()
     

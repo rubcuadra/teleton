@@ -21,6 +21,11 @@ class PacientesSerializer(serializers.ModelSerializer):
         model = Pacientes
         fields = '__all__'
 
+class TelmexSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Telmex
+        fields = '__all__'
+
 class EstadoSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Estado

@@ -8,10 +8,12 @@ router.register(r'banamex', BanamexViewSet,"Banamex")
 router.register(r'soriana', SorianaViewSet,"Soriana")
 router.register(r'centros', CentrosViewSet,"Centros")
 router.register(r'pacientes', PacientesViewSet,"Pacientes")
-router.register(r'estados', EstadoViewSet,"Pacientes")
+router.register(r'estados', EstadoViewSet,"Estados")
+router.register(r'telmex', TelmexViewSet,"Telmex")
 
 urlpatterns = [
 	url(r'^', include(router.urls), name='Loader'), 
 	url(r'^upload/banamex/', BanamexUploadViewSet.as_view(), name='upload_banamex'),
-	url(r'^upload/soriana/', SorianaUploadViewSet.as_view(), name='upload_soriana')
+	url(r'^upload/soriana/', SorianaUploadViewSet.as_view(), name='upload_soriana'),
+	url(r'^upload/telmex/', TelmexUploadViewSet.as_view(), name='upload_telmex')
 ]

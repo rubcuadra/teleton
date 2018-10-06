@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 from __future__ import unicode_literals
 from django.db import models
 from django.dispatch import receiver
@@ -15,6 +16,44 @@ class Estado(models.Model):
     name = models.CharField(max_length=30)
     lat = models.DecimalField(max_digits=12, decimal_places=8)
     lng = models.DecimalField(max_digits=12, decimal_places=8)
+
+    @staticmethod
+    def TelmexParser(estadoTelmex):
+        return {
+            "Aguascalientes":2,
+            "Baja California Norte":3,
+            "Baja California Sur":4,
+            "Campeche":5,
+            "Chiapas":8,
+            "Chihuahua":9,
+            "Coahuila":6,
+            "Colima":7,
+            "DF":1,
+            "Durango":10,
+            "Estado de Mxico":11,
+            "Guanajuato":12,
+            "Guerrero":13,
+            "Hidalgo":14,
+            "Jalisco":15,
+            "Michoacn":16,
+            "Morelos":17,
+            "Nayarit":18,
+            "Nuevo Len":19,
+            "Oaxaca":20,
+            "Puebla":21,
+            "Quertaro":22,
+            "Quintana Roo":23,
+            "San Luis Potos":24,
+            "Sinaloa":25,
+            "Sonora":26,
+            "Tabasco":27,
+            "Tamaulipas":28,
+            "Tlaxcala":29,
+            "Veracruz":30,
+            "Yucatn":31,
+            "Zacatecas":32,
+            "TOTALES":-1,
+        }[estadoTelmex]
 
 class Banamex(models.Model):
     MEDIO_CHOICE = (\
@@ -70,11 +109,15 @@ class Soriana(models.Model):
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
 
-# class Telmex(models.Model):
-#     Estado = models.IntegerField()    
-#         <td>Total de LLamadas</td>
-#         <td>Importe total Acumulado</td>
-#         <td>% por monto acumulado</td>
+class Telmex(models.Model):
+    Fecha = models.DateTimeField(auto_now=False) #fecha y horaT
+    Estado = models.ForeignKey(Estado)
+    Llamadas = models.IntegerField()
+    Importe = models.DecimalField(max_digits=13, decimal_places=3)
+    Porcentaje = models.DecimalField(max_digits=8, decimal_places=4) #Por monto acumulado...wtf?
+
+    class Meta:
+        unique_together = (("Fecha", "Estado"),)
 
 class Pacientes(models.Model):
     FL_PACIENTE = models.BigIntegerField(primary_key=True,verbose_name='id') 
