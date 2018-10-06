@@ -52,8 +52,14 @@ class Banamex(models.Model):
         return datetime(*[int(k) for k in o])
     
 class Soriana(models.Model):
-    Donadores = models.BigIntegerField(primary_key=True) #Llevar tracking del archivo acumulado
+    Donadores = models.BigIntegerField() 
     Fecha = models.DateTimeField(auto_now=False) #fecha y hora
     Tienda = models.IntegerField()
-
-    # FECHA|TIENDA|DONADORES|IMPORTE
+    Monto = models.DecimalField(max_digits=16, decimal_places=8)
+    
+    @staticmethod
+    def getFecha(fecha): #aaaa-mm-dd hh:mmtt EJ. 20161211   2:00AM
+        return datetime.strptime(fecha,"%Y%m%d   %I:%M%p")
+        
+    class Meta:
+        unique_together = (("Fecha", "Tienda"),)

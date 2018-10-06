@@ -5,3 +5,8 @@ class BanamexSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Banamex
         fields = '__all__'
+
+class SorianaSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Soriana
+        fields = '__all__'
