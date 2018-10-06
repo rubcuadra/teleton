@@ -6,6 +6,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'banamex', BanamexViewSet,"Banamex")
 router.register(r'soriana', SorianaViewSet,"Soriana")
+router.register(r'centros', CentrosViewSet,"Centros")
+router.register(r'pacientes', PacientesViewSet,"Pacientes")
 
 urlpatterns = [
 	url(r'^', include(router.urls), name='Loader'), 

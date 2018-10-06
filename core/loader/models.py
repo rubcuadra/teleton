@@ -63,3 +63,25 @@ class Soriana(models.Model):
         
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
+
+class Pacientes(models.Model):
+    FL_PACIENTE = models.BigIntegerField(primary_key=True,verbose_name='id') 
+    NB_ALIAS = models.CharField(max_length=40,verbose_name='alias') 
+    EDAD = models.CharField(max_length=10,verbose_name='edad')
+    NB_ENFERMEDAD = models.CharField(max_length=255,verbose_name='enfermedad')
+    #Egresos
+    CL_ESTATUS = models.CharField(max_length=1,verbose_name='estatus', blank=True, null=True)
+    DS_LOGROS = models.CharField(max_length=1000,verbose_name='logros', blank=True, null=True)
+    DS_TESTIMONIOS = models.CharField(max_length=1000,verbose_name='testimonios', blank=True, null=True)
+
+class Centros(models.Model):
+    name = models.CharField(max_length=50) 
+    required = models.BigIntegerField(verbose_name='Recursos necesarios 2018')
+    promised = models.BigIntegerField(verbose_name='Ingresos comprometidos')
+    estimated_accomplishment = models.IntegerField(verbose_name='\% esperado de cumplimiento')
+    estimated = models.BigIntegerField(verbose_name='Ingresos esperados')
+    required_event = models.BigIntegerField(verbose_name='Recursos necesarios en evento Teleton')
+    capacity = models.IntegerField(verbose_name='Capacidad de pacientes')
+    anual_cost = models.IntegerField(verbose_name='Costo anual promedio por paciente')
+    amount_help = models.IntegerField(verbose_name='Numero de pacientes por cubrir con donativos')
+

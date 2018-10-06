@@ -10,3 +10,13 @@ class SorianaSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Soriana
         fields = '__all__'
+
+class CentrosSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Centros
+        fields = '__all__'
+
+class PacientesSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Pacientes
+        fields = '__all__'

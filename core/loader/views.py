@@ -74,4 +74,12 @@ class BanamexViewSet(viewsets.ModelViewSet):
 class SorianaViewSet(viewsets.ModelViewSet):
     serializer_class = SorianaSerializer
     queryset = Soriana.objects.all()
+
+class CentrosViewSet(viewsets.ModelViewSet):
+    serializer_class = CentrosSerializer
+    queryset = Centros.objects.all()
+    
+class PacientesViewSet(viewsets.ModelViewSet):
+    serializer_class = PacientesSerializer
+    queryset = Pacientes.objects.all()
     
