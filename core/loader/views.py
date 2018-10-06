@@ -11,7 +11,6 @@ class BanamexViewSet(APIView):
     def fix(self,row):
         row["Fecha"] = Banamex.getFecha(row["Fecha"],row["Hora"])
         del row["Hora"] #Useless
-        print(row)
         return row
 
     def post(self,request):
