@@ -87,7 +87,7 @@ class SorianaUploadViewSet(APIView):
                                     "Tienda":int(record[1]),
                                     "Donadores":int(record[2]),
                                     "Monto":float(record[3]),
-                                    "Estado":Estado.SorianaParser( SORIANA_SUCURSALES_TO_STATE[o.Tienda] ) })
+                                    "Estado":Estado.SorianaParser( SORIANA_SUCURSALES_TO_STATE.get(o.Tienda,1) ) })
                             if ss.is_valid():
                                 ss.save()
                             else:
@@ -117,7 +117,7 @@ class SourcesViewSet(APIView):
         },{
             "id":3,
             "name":"Soriana",
-            "amount": 0
+            "amount": Soriana.objects.get_total_amount()
         },{
             "id":4,
             "name":"Telcel",
