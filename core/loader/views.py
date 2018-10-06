@@ -15,7 +15,7 @@ class BanamexViewSet(APIView):
         return row
 
     def post(self,request):
-        if "fisiser" in request.FILES:
+        if "fisier" in request.FILES:
             f = request.FILES["fisier"]
             if f:
                 data = csv.DictReader( EncodedFile(f, 'utf8', "utf-8-sig") )

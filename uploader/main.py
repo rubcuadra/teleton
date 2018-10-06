@@ -6,7 +6,12 @@ if __name__ == '__main__':
 	folder = "2016/Banamex"
 
 	for f in glob(f"{folder}/*.txt"):
-		files = {'fisier': open(f,'rb')}
-		r = post(url, files=None)
-		if r.status_code > 399:
+		try:
+			files = {'fisier': open(f,'rb')}
+			r = post(url, files=files)
+			if r.status_code > 399:
 			print(f)
+		except:
+			print(f)
+
+		

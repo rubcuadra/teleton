@@ -51,3 +51,9 @@ class Banamex(models.Model):
         o = [ fecha[:4],fecha[4:6],fecha[6:],hora[:2],hora[2:] ]
         return datetime(*[int(k) for k in o])
     
+class Soriana(models.Model):
+    Donadores = models.BigIntegerField(primary_key=True) #Llevar tracking del archivo acumulado
+    Fecha = models.DateTimeField(auto_now=False) #fecha y hora
+    Tienda = models.IntegerField()
+
+    # FECHA|TIENDA|DONADORES|IMPORTE
