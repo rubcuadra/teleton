@@ -5,10 +5,9 @@ from loader.serializers import *
 # from request import post
 # import csv
 
-# for o in Banamex.objects.all():
-# 	o.Monto /= 100
-# 	o.save()
-
+for o in Soriana.objects.all():
+	o.Estado = Estado.SorianaParser( SORIANA_SUCURSALES_TO_STATE[o.Tienda] ) 
+	o.save()
 
 # BANAMEX_PARSER = { 1:2,2:3,3:4,4:5,7:8,8:9,5:6,6:7,9:1,15:11,11:12,12:13,13:14,14:15 }
 # for key, value in BANAMEX_PARSER.iteritems(): Banamex.objects.filter(Estado=key).update(Estado=value)

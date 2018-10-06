@@ -86,7 +86,8 @@ class SorianaUploadViewSet(APIView):
                                     "Fecha":Soriana.getFecha(record[0]),
                                     "Tienda":int(record[1]),
                                     "Donadores":int(record[2]),
-                                    "Monto":float(record[3])})
+                                    "Monto":float(record[3]),
+                                    "Estado":Estado.SorianaParser( SORIANA_SUCURSALES_TO_STATE[o.Tienda] ) })
                             if ss.is_valid():
                                 ss.save()
                             else:
