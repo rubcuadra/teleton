@@ -40,7 +40,7 @@ class Banamex(models.Model):
     Tipo = models.IntegerField(choices=TIPO_CHOICE)
     Sucursal = models.IntegerField()
     Cuenta = models.IntegerField()
-    Autorizacion = models.BigIntegerField() #12 digits, integer has 10
+    Autorizacion = models.BigIntegerField(primary_key=True) #12 digits, integer has 10
     Monto = models.DecimalField(max_digits=15, decimal_places=2)
     Estado = models.IntegerField()
 

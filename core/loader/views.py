@@ -22,12 +22,12 @@ class BanamexUploadViewSet(APIView):
             f = request.FILES[FILE_HEADER]
             if f:
                 data = csv.DictReader( EncodedFile(f, 'utf8', "utf-8-sig") )
-                bs = BanamexSerializer(data=[self.fix(d) for d in data],many=True)
-                if bs.is_valid():
-                    bs.save()
-                    return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
-                else:
-                    return Response(bs.errors, status=status.HTTP_400_BAD_REQUEST)
+                for d in data:
+                    print(d)
+                    bs = BanamexSerializer(data=self.fix(d))
+                    if bs.is_valid():
+                        bs.save()
+                return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)
 
 class SorianaUploadViewSet(APIView):
