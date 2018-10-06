@@ -16,6 +16,7 @@ FILE_HEADER = "fisier"
 class BanamexUploadViewSet(APIView):
     def fix(self,row):
         row["Fecha"] = Banamex.getFecha(row["Fecha"],row["Hora"])
+        row["Monto"] = row["Monto"]/100
         del row["Hora"] #Useless
         return row
 
@@ -97,6 +98,40 @@ class SorianaUploadViewSet(APIView):
                     line += x
                 return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)
+
+class SourcesViewSet(APIView):
+    def get(self,request):
+        toRet = [{
+            "id":0,
+            "name":"Banamex",
+            "amount": Banamex.objects.get_total_amount()
+        },{
+            "id":1,
+            "name":"Farmacias del Ahorro",
+            "amount": 0
+        },{
+            "id":2,
+            "name":"Infinitum",
+            "amount": 0
+        },{
+            "id":3,
+            "name":"Soriana",
+            "amount": 0
+        },{
+            "id":4,
+            "name":"Telcel",
+            "amount": 0
+        },{
+            "id":5,
+            "name":"Telecomm",
+            "amount": 0
+        },{
+            "id":6,
+            "name":"Telmex",
+            "amount": Telmex.objects.get_total_amount()
+        }]
+        
+        return Response(toRet)
 
 #ViewSets
 class BanamexViewSet(viewsets.ModelViewSet):

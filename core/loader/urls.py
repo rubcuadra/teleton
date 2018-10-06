@@ -15,5 +15,6 @@ urlpatterns = [
 	url(r'^', include(router.urls), name='Loader'), 
 	url(r'^upload/banamex/', BanamexUploadViewSet.as_view(), name='upload_banamex'),
 	url(r'^upload/soriana/', SorianaUploadViewSet.as_view(), name='upload_soriana'),
-	url(r'^upload/telmex/', TelmexUploadViewSet.as_view(), name='upload_telmex')
+	url(r'^upload/telmex/', TelmexUploadViewSet.as_view(), name='upload_telmex'),
+	url(r'^sources/', SourcesViewSet.as_view(), name='sources')
 ]

@@ -11,6 +11,9 @@ from datetime import datetime
 # from django.contrib.auth import get_user_model
 import json
 
+from django.db.models import Sum
+
+
 class Estado(models.Model):
     _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
@@ -61,6 +64,9 @@ class Estado(models.Model):
             "TOTALES":-1,
         }[estadoTelmex]
 
+class BanamexManager(models.Manager):
+    def get_total_amount(self): return self.aggregate(Sum('Monto'))["Monto__sum"]
+
 class Banamex(models.Model):
     MEDIO_CHOICE = (\
         (1, 'Sucs'),
@@ -94,6 +100,7 @@ class Banamex(models.Model):
     Autorizacion = models.BigIntegerField(primary_key=True) #12 digits, integer has 10
     Monto = models.DecimalField(max_digits=15, decimal_places=2)
     Estado = models.ForeignKey(Estado)
+    objects = BanamexManager()
 
     @staticmethod
     def getFecha(fecha,hora): #aaaammdd, hhmm
@@ -115,15 +122,22 @@ class Soriana(models.Model):
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
 
+class TelmexManager(models.Manager):
+    def get_total_amount(self): 
+        newest = self.filter(Fecha=self.latest().Fecha)
+        return sum(n.Importe for n in newest)
+
 class Telmex(models.Model):
     Fecha = models.DateTimeField(auto_now=False) #fecha y horaT
     Estado = models.ForeignKey(Estado)
     Llamadas = models.IntegerField()
     Importe = models.DecimalField(max_digits=13, decimal_places=3)
     Porcentaje = models.DecimalField(max_digits=8, decimal_places=4) #Por monto acumulado...wtf?
+    objects = TelmexManager()
 
     class Meta:
         unique_together = (("Fecha", "Estado"),)
+        get_latest_by = 'Fecha'
 
 class Pacientes(models.Model):
     FL_PACIENTE = models.BigIntegerField(primary_key=True,verbose_name='id') 
@@ -145,4 +159,3 @@ class Centros(models.Model):
     capacity = models.IntegerField(verbose_name='Capacidad de pacientes')
     anual_cost = models.IntegerField(verbose_name='Costo anual promedio por paciente')
     amount_help = models.IntegerField(verbose_name='Numero de pacientes por cubrir con donativos')
-
