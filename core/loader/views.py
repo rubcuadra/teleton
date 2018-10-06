@@ -100,6 +100,13 @@ class SorianaUploadViewSet(APIView):
                 return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)
 
+class MapViewSet(APIView):
+    def get(self,request):
+        
+        print(self.kwargs)
+        
+        return Response({"MSG":"KK"})
+
 class SourcesViewSet(APIView):
     def get(self,request):
         toRet = [{
