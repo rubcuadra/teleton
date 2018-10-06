@@ -18,6 +18,12 @@ class Estado(models.Model):
     lng = models.DecimalField(max_digits=12, decimal_places=8)
 
     @staticmethod
+    def BanamexParser(estadoBanamex):
+        BANAMEX_PARSER = { 1:2,2:3,3:4,4:5,7:8,8:9,5:6,6:7,9:1,15:11,11:12,12:13,13:14,14:15 }
+        if estadoBanamex in BANAMEX_PARSER: return BANAMEX_PARSER[estadoBanamex]
+        return estadoBanamex #it is already ok
+        
+    @staticmethod
     def TelmexParser(estadoTelmex):
         return {
             "Aguascalientes":2,
@@ -87,7 +93,7 @@ class Banamex(models.Model):
     Cuenta = models.IntegerField()
     Autorizacion = models.BigIntegerField(primary_key=True) #12 digits, integer has 10
     Monto = models.DecimalField(max_digits=15, decimal_places=2)
-    Estado = models.IntegerField()
+    Estado = models.ForeignKey(Estado)
 
     @staticmethod
     def getFecha(fecha,hora): #aaaammdd, hhmm

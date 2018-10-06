@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*- 
-# from loader.models import *
-from loader.serializers import *
 from loader.models import *
-from codecs import EncodedFile
-from request import post
-import csv
+from loader.serializers import *
+# from codecs import EncodedFile
+# from request import post
+# import csv
+
+# BANAMEX_PARSER = { 1:2,2:3,3:4,4:5,7:8,8:9,5:6,6:7,9:1,15:11,11:12,12:13,13:14,14:15 }
+# for key, value in BANAMEX_PARSER.iteritems(): Banamex.objects.filter(Estado=key).update(Estado=value)
 
 # with open("kids.csv", "r") as f:
 # 	data = csv.DictReader( f , delimiter=";")
