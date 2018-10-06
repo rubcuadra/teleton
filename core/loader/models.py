@@ -18,7 +18,9 @@ class Banamex(models.Model):
         (4, 'Bnet'),
         (5, 'Tfer'),
         (6, 'Alcancias'),
-        (7, 'Otro'),
+        (7, 'Otro 7'),
+        (8, 'Otro 8'),
+        (9, 'Otro 9'),
     )
 
     TIPO_CHOICE = (
@@ -28,7 +30,9 @@ class Banamex(models.Model):
         (4, 'TBNX'),
         (5, 'TOBS'),
         (6, 'AMEX'),
-        (7, 'Otro'),
+        (7, 'Otro 7'),
+        (8, 'Otro 8'),
+        (9, 'Otro 9'),
     )
 
     Fecha = models.DateTimeField(auto_now=False) #fecha y hora
