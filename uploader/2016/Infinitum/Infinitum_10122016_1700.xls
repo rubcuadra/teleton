@@ -1,0 +1,209 @@
+
+
+<html>
+  <head>    
+    <title>Mi Telmex</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<link href="/reportes/css/ss_estructura_mi_telmex.css" rel="stylesheet" type="text/css">
+  	<link href="/reportes/css/ss_estilos_mi_telmex.css" rel="stylesheet" type="text/css">
+	<link href="/reportes/css/displaytag.css" rel="stylesheet" type="text/css">
+	<link href="/reportes/css/screen.css" rel="stylesheet" type="text/css" />
+		
+  </head>
+  
+  <body>
+    <div id="pagina" style="height:100%;">
+		<table border="0" cellpadding="0" cellspacing="0" height="100%" >
+			<tr valign="top">
+				<td height="100" style="border-top:3px solid #FFCC00;">
+					<table cellpadding="0" cellspacing="0" style="width:100%" class="bor_azul">
+						<tr>
+							<td height="50" colspan="2">
+								<a href="index.html"><img src="/reportes/images/logo_tmx.gif" width="210" height="34" alt="Telmex"></a>
+								<ul class="lst_menu_horizontal" style="padding-right:15px;">
+                				</ul>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div id="tab_breadcrum" style="margin:0;padding:0;"> 
+									<p class="txt_breadcrum_azul">&nbsp; </p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="hogar/index.html"><img src="/reportes/images/tit_mitelmex.gif" width="135" height="35" alt="en tu Hogar"></a>
+							</td>
+							<td align="right">
+								<ul class="lst_menu_horizontal" style="padding-right:15px;">									
+									<li>
+										<a class="txt_azulmas" href="/reportes/rp_inicioMenu.jsp">Regresar</a><a class="txt_azulmas" href="#"></a>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table> 
+				
+			
+					<table width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+          						<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="tit_secc_subtitulo">Reporte de Donaciones al Teletón.<br></td>
+									</tr>
+									<tr>
+										<td align="right">* Reporte  del 10 de diciembre de 2016 al 10 de diciembre de 2016</td>
+									</tr>
+									<tr>
+										<td class="bak_separador_puntos_h"><br><br></td>
+									</tr>
+									<tr>
+									  <td>
+									  
+									    <!-- Listado de Comerciales -->									    									    
+									    <span class=pagebanner2>P&aacute;gina 1 Mostrando 1 a 13 Total de Registros: 13</span>
+<table id="rowC" class="lpi">
+<thead>
+<tr>
+<th>* Hora</th>
+<th>Total de Movimientos</th>
+<th>% de Distribución de Movimientos</th>
+<th>Monto Total acumulado</th>
+<th>% De Distribución de Monto acumulado</th></tr></thead>
+<tfoot>
+											  <tr>
+												<td width="35%" align="right"><STRONG>Total por Periodo:</STRONG></td>
+												<td width="15%" align="right"><STRONG>39</STRONG></td>
+												<td width="15%" align="right"><STRONG>100.00%</STRONG></td>
+												<td width="15%" align="right"><STRONG>$13,150</STRONG></td>
+												<td width="15%" align="right"><STRONG>100.00%</STRONG></td>
+											  </tr>
+										    </tfoot>
+<tbody>
+<tr class="odd">
+<td class="txt_mediano">00:00 - 00:59</td>
+<td style="text-align:right" class="txt_mediano">1</td>
+<td style="text-align:right" class="txt_mediano">2.56%</td>
+<td style="text-align:right" class="txt_mediano">$150</td>
+<td style="text-align:right" class="txt_mediano">1.14%</td></tr>
+<tr class="even">
+<td class="txt_mediano">01:00 - 01:59</td>
+<td style="text-align:right" class="txt_mediano">2</td>
+<td style="text-align:right" class="txt_mediano">5.13%</td>
+<td style="text-align:right" class="txt_mediano">$1,000</td>
+<td style="text-align:right" class="txt_mediano">7.60%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">06:00 - 06:59</td>
+<td style="text-align:right" class="txt_mediano">2</td>
+<td style="text-align:right" class="txt_mediano">5.13%</td>
+<td style="text-align:right" class="txt_mediano">$400</td>
+<td style="text-align:right" class="txt_mediano">3.04%</td></tr>
+<tr class="even">
+<td class="txt_mediano">07:00 - 07:59</td>
+<td style="text-align:right" class="txt_mediano">4</td>
+<td style="text-align:right" class="txt_mediano">10.26%</td>
+<td style="text-align:right" class="txt_mediano">$800</td>
+<td style="text-align:right" class="txt_mediano">6.08%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">08:00 - 08:59</td>
+<td style="text-align:right" class="txt_mediano">1</td>
+<td style="text-align:right" class="txt_mediano">2.56%</td>
+<td style="text-align:right" class="txt_mediano">$250</td>
+<td style="text-align:right" class="txt_mediano">1.90%</td></tr>
+<tr class="even">
+<td class="txt_mediano">09:00 - 09:59</td>
+<td style="text-align:right" class="txt_mediano">3</td>
+<td style="text-align:right" class="txt_mediano">7.69%</td>
+<td style="text-align:right" class="txt_mediano">$1,300</td>
+<td style="text-align:right" class="txt_mediano">9.89%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">10:00 - 10:59</td>
+<td style="text-align:right" class="txt_mediano">5</td>
+<td style="text-align:right" class="txt_mediano">12.82%</td>
+<td style="text-align:right" class="txt_mediano">$1,700</td>
+<td style="text-align:right" class="txt_mediano">12.93%</td></tr>
+<tr class="even">
+<td class="txt_mediano">11:00 - 11:59</td>
+<td style="text-align:right" class="txt_mediano">5</td>
+<td style="text-align:right" class="txt_mediano">12.82%</td>
+<td style="text-align:right" class="txt_mediano">$3,150</td>
+<td style="text-align:right" class="txt_mediano">23.95%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">12:00 - 12:59</td>
+<td style="text-align:right" class="txt_mediano">6</td>
+<td style="text-align:right" class="txt_mediano">15.38%</td>
+<td style="text-align:right" class="txt_mediano">$2,300</td>
+<td style="text-align:right" class="txt_mediano">17.49%</td></tr>
+<tr class="even">
+<td class="txt_mediano">13:00 - 13:59</td>
+<td style="text-align:right" class="txt_mediano">2</td>
+<td style="text-align:right" class="txt_mediano">5.13%</td>
+<td style="text-align:right" class="txt_mediano">$500</td>
+<td style="text-align:right" class="txt_mediano">3.80%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">14:00 - 14:59</td>
+<td style="text-align:right" class="txt_mediano">4</td>
+<td style="text-align:right" class="txt_mediano">10.26%</td>
+<td style="text-align:right" class="txt_mediano">$700</td>
+<td style="text-align:right" class="txt_mediano">5.32%</td></tr>
+<tr class="even">
+<td class="txt_mediano">15:00 - 15:59</td>
+<td style="text-align:right" class="txt_mediano">2</td>
+<td style="text-align:right" class="txt_mediano">5.13%</td>
+<td style="text-align:right" class="txt_mediano">$400</td>
+<td style="text-align:right" class="txt_mediano">3.04%</td></tr>
+<tr class="odd">
+<td class="txt_mediano">16:00 - 16:59</td>
+<td style="text-align:right" class="txt_mediano">2</td>
+<td style="text-align:right" class="txt_mediano">5.13%</td>
+<td style="text-align:right" class="txt_mediano">$500</td>
+<td style="text-align:right" class="txt_mediano">3.80%</td></tr></tbody></table>
+											
+										
+																			
+										<!-- Listado de Residenciales -->
+										
+										<!-- Listado de TOTALES -->
+										
+<table id="xlsRow" class="lpi">
+<thead>
+<tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th></tr></thead>
+<tbody>
+<tr class="odd">
+<td style="background:#195089;font:bold;color:#FFFFFF;width:35%;text-align:right;">Total por Evento:</td>
+<td style="background:#195089;font:bold;color:#FFFFFF;width:15%;text-align:right;">67</td>
+<td style="background:#195089;font:bold;color:#FFFFFF;width:15%;text-align:right;"> </td>
+<td style="background:#195089;font:bold;color:#FFFFFF;width:15%;text-align:right;">$23,050</td>
+<td style="background:#195089;font:bold;color:#FFFFFF;width:15%;text-align:right;"> </td></tr></tbody></table><div class=lnk_seleccionado>Exportar: 
+<a href="/reportes/teleton/donaciones.jsp?d-448985-e=2&amp;txFechaFin=10%2F12%2F2016&amp;txFechaFin=10%252F12%252F2016&amp;rdbPeriodo=P&amp;txFechaIni=10%2F12%2F2016&amp;txFechaIni=10%252F12%252F2016&amp;6578706f7274=1&amp;hdTipoRep=23&amp;hdTipoRep=23&amp;cbxYear=&amp;cbxYear=2014&amp;cbxMonth=&amp;cbxMonth=1"><span class="export excel">Excel </span></a></div>
+																				
+									  </td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>			
+					<div id="tab_pie_pagina">
+						<p id="tab_derechos"><a href="#">Todos los Derechos Reservados para Telmex 2016.</a></p>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+  </body>
+</html>

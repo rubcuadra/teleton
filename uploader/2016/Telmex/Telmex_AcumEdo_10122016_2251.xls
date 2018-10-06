@@ -1,0 +1,206 @@
+<table border=1>
+	<tr>
+		<td>Estado</td>
+		<td>Total de LLamadas</td>
+		<td>Importe total Acumulado</td>
+		<td>% por monto acumulado</td>
+</tr>
+	<tr>
+		<td>Aguascalientes           </td>
+		<td>1184</td>
+		<td>$382,600</td>
+		<td>1.54%</td>
+</tr>
+	<tr>
+		<td>Baja California Norte    </td>
+		<td>2274</td>
+		<td>$715,300</td>
+		<td>2.87%</td>
+</tr>
+	<tr>
+		<td>Baja California Sur      </td>
+		<td>834</td>
+		<td>$238,150</td>
+		<td>0.96%</td>
+</tr>
+	<tr>
+		<td>Campeche                 </td>
+		<td>202</td>
+		<td>$64,100</td>
+		<td>0.26%</td>
+</tr>
+	<tr>
+		<td>Chiapas                  </td>
+		<td>626</td>
+		<td>$199,950</td>
+		<td>0.8%</td>
+</tr>
+	<tr>
+		<td>Chihuahua                </td>
+		<td>4119</td>
+		<td>$1,334,750</td>
+		<td>5.36%</td>
+</tr>
+	<tr>
+		<td>Coahuila                 </td>
+		<td>3534</td>
+		<td>$1,083,350</td>
+		<td>4.35%</td>
+</tr>
+	<tr>
+		<td>Colima                   </td>
+		<td>389</td>
+		<td>$125,550</td>
+		<td>0.5%</td>
+</tr>
+	<tr>
+		<td>DF                       </td>
+		<td>22515</td>
+		<td>$8,266,600</td>
+		<td>33.21%</td>
+</tr>
+	<tr>
+		<td>Durango                  </td>
+		<td>645</td>
+		<td>$202,600</td>
+		<td>0.81%</td>
+</tr>
+	<tr>
+		<td>Estado de México         </td>
+		<td>4516</td>
+		<td>$1,418,100</td>
+		<td>5.7%</td>
+</tr>
+	<tr>
+		<td>Guanajuato               </td>
+		<td>3613</td>
+		<td>$1,176,600</td>
+		<td>4.73%</td>
+</tr>
+	<tr>
+		<td>Guerrero                 </td>
+		<td>740</td>
+		<td>$218,550</td>
+		<td>0.88%</td>
+</tr>
+	<tr>
+		<td>Hidalgo                  </td>
+		<td>1647</td>
+		<td>$520,750</td>
+		<td>2.09%</td>
+</tr>
+	<tr>
+		<td>Jalisco                  </td>
+		<td>6063</td>
+		<td>$1,913,550</td>
+		<td>7.69%</td>
+</tr>
+	<tr>
+		<td>Michoacán                </td>
+		<td>1381</td>
+		<td>$449,500</td>
+		<td>1.81%</td>
+</tr>
+	<tr>
+		<td>Morelos                  </td>
+		<td>920</td>
+		<td>$318,400</td>
+		<td>1.28%</td>
+</tr>
+	<tr>
+		<td>Nayarit                  </td>
+		<td>531</td>
+		<td>$147,450</td>
+		<td>0.59%</td>
+</tr>
+	<tr>
+		<td>Nuevo León               </td>
+		<td>3057</td>
+		<td>$1,031,850</td>
+		<td>4.14%</td>
+</tr>
+	<tr>
+		<td>Oaxaca                   </td>
+		<td>638</td>
+		<td>$183,000</td>
+		<td>0.74%</td>
+</tr>
+	<tr>
+		<td>Puebla                   </td>
+		<td>2167</td>
+		<td>$706,750</td>
+		<td>2.84%</td>
+</tr>
+	<tr>
+		<td>Querétaro                </td>
+		<td>1431</td>
+		<td>$499,400</td>
+		<td>2.01%</td>
+</tr>
+	<tr>
+		<td>Quintana Roo             </td>
+		<td>565</td>
+		<td>$190,700</td>
+		<td>0.77%</td>
+</tr>
+	<tr>
+		<td>San Luis Potosí          </td>
+		<td>1261</td>
+		<td>$404,050</td>
+		<td>1.62%</td>
+</tr>
+	<tr>
+		<td>Sinaloa                  </td>
+		<td>1267</td>
+		<td>$365,550</td>
+		<td>1.47%</td>
+</tr>
+	<tr>
+		<td>Sonora                   </td>
+		<td>1728</td>
+		<td>$525,350</td>
+		<td>2.11%</td>
+</tr>
+	<tr>
+		<td>Tabasco                  </td>
+		<td>472</td>
+		<td>$158,600</td>
+		<td>0.64%</td>
+</tr>
+	<tr>
+		<td>Tamaulipas               </td>
+		<td>2834</td>
+		<td>$895,850</td>
+		<td>3.6%</td>
+</tr>
+	<tr>
+		<td>Tlaxcala                 </td>
+		<td>312</td>
+		<td>$88,450</td>
+		<td>0.36%</td>
+</tr>
+	<tr>
+		<td>Veracruz                 </td>
+		<td>2222</td>
+		<td>$655,400</td>
+		<td>2.63%</td>
+</tr>
+	<tr>
+		<td>Yucatán                  </td>
+		<td>644</td>
+		<td>$197,400</td>
+		<td>0.79%</td>
+</tr>
+	<tr>
+		<td>Zacatecas                </td>
+		<td>679</td>
+		<td>$215,850</td>
+		<td>0.87%</td>
+</tr>
+	<tr>
+		<td>TOTALES</td>
+		<td>75010</td>
+		<td>$24,894,050</td>
+		<td>100%</td>
+</tr>
+</table>
