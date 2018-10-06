@@ -8,6 +8,7 @@ router.register(r'banamex', BanamexViewSet,"Banamex")
 router.register(r'soriana', SorianaViewSet,"Soriana")
 router.register(r'centros', CentrosViewSet,"Centros")
 router.register(r'pacientes', PacientesViewSet,"Pacientes")
+router.register(r'estados', EstadoViewSet,"Pacientes")
 
 urlpatterns = [
 	url(r'^', include(router.urls), name='Loader'), 

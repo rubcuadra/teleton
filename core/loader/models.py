@@ -10,6 +10,12 @@ from datetime import datetime
 # from django.contrib.auth import get_user_model
 import json
 
+class Estado(models.Model):
+    _id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=30)
+    lat = models.DecimalField(max_digits=12, decimal_places=8)
+    lng = models.DecimalField(max_digits=12, decimal_places=8)
+
 class Banamex(models.Model):
     MEDIO_CHOICE = (\
         (1, 'Sucs'),
@@ -63,6 +69,12 @@ class Soriana(models.Model):
         
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
+
+# class Telmex(models.Model):
+#     Estado = models.IntegerField()    
+#         <td>Total de LLamadas</td>
+#         <td>Importe total Acumulado</td>
+#         <td>% por monto acumulado</td>
 
 class Pacientes(models.Model):
     FL_PACIENTE = models.BigIntegerField(primary_key=True,verbose_name='id') 

@@ -20,3 +20,8 @@ class PacientesSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Pacientes
         fields = '__all__'
+
+class EstadoSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Estado
+        fields = '__all__'

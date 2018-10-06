@@ -82,4 +82,8 @@ class CentrosViewSet(viewsets.ModelViewSet):
 class PacientesViewSet(viewsets.ModelViewSet):
     serializer_class = PacientesSerializer
     queryset = Pacientes.objects.all()
+
+class EstadoViewSet(viewsets.ModelViewSet):
+    serializer_class = EstadoSerializer
+    queryset = Estado.objects.all()
     
