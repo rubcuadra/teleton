@@ -118,11 +118,11 @@ class MapViewSet(APIView):
             toReturn = a[offset:offset+limit]
             nxt = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset+limit,limit,src) if offset<c else None
             prv = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset-limit,limit,src) if offset>0 else None
-            return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
+            return Response({"count":c,"next":nxt,"prev":prv,"data":[{"src":int(src),"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
         else:
             c = sum( [a.objects.get_over_datetime(dt).count() for a in ops if a] )
             acum = 0
-            for model in ops:
+            for ix,model in enumerate(ops):
                 if model:
                     a = model.objects.get_over_datetime(dt)
                     cc = a.count()
@@ -133,7 +133,7 @@ class MapViewSet(APIView):
                         toReturn = a[offset-acum:offset-acum+limit]
                         nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset+limit,limit)
                         prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit) if acum+offset-limit>0 else None
-                        return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
+                        return Response({"count":c,"next":nxt,"prev":prv,"data":[{"src":ix,"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
                 
             prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit) if c-limit+1>0 else None
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
@@ -144,30 +144,37 @@ class SourcesViewSet(APIView):
         toRet = [{
             "id":0,
             "name":"Banamex",
+            "total": Banamex.objects.all().count(),
             "amount": Banamex.objects.get_total_amount()
         },{
             "id":1,
             "name":"Farmacias del Ahorro",
+            "total": 0,
             "amount": 0
         },{
             "id":2,
             "name":"Infinitum",
+            "total": 0,
             "amount": 0
         },{
             "id":3,
             "name":"Soriana",
+            "total": Soriana.objects.all().count(),
             "amount": Soriana.objects.get_total_amount()
         },{
             "id":4,
             "name":"Telcel",
+            "total": 0,
             "amount": 0
         },{
             "id":5,
             "name":"Telecomm",
+            "total": 0,
             "amount": 0
         },{
             "id":6,
             "name":"Telmex",
+            "total": Telmex.objects.all().count(),
             "amount": Telmex.objects.get_total_amount()
         }]
         

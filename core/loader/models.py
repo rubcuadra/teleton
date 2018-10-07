@@ -218,4 +218,5 @@ class Centros(models.Model):
     capacity = models.IntegerField(verbose_name='Capacidad de pacientes')
     anual_cost = models.IntegerField(verbose_name='Costo anual promedio por paciente')
     amount_help = models.IntegerField(verbose_name='Numero de pacientes por cubrir con donativos')
-
+    lat = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
+    lng = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
