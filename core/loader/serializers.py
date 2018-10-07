@@ -5,11 +5,13 @@ class BanamexSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Banamex
         fields = '__all__'
-
+        depth = 1
+        
 class SorianaSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Soriana
         fields = '__all__'
+        depth = 1
 
 class CentrosSerializer(serializers.ModelSerializer):
     class Meta:    
@@ -25,6 +27,7 @@ class TelmexSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Telmex
         fields = '__all__'
+        depth = 1
 
 class EstadoSerializer(serializers.ModelSerializer):
     class Meta:    
