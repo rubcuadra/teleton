@@ -109,36 +109,36 @@ class MapViewSet(APIView):
         limit = int(self.request.query_params.get("limit",500))
         if not time: return Response({"msg":"WRONG PARAMS, must send time"}, status=status.HTTP_400_BAD_REQUEST)
         dt = timezone.make_aware( datetime.fromtimestamp(int( time )) , timezone.utc) 
+        pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
         ops    = [Banamex,None,None,Soriana,None,None,Telmex]
-        opsSer = [BanamexSerializer,None,None,SorianaSerializer,None,None,TelmexSerializer]
         if src:
-            model, serializer = ops[int(src)], opsSer[int(src)]
+            model = ops[int(src)]
             a = model.objects.get_over_datetime(dt)
             c = a.count()
             toReturn = a[offset:offset+limit]
-            ser = serializer(toReturn,many=True)
-            pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
             nxt = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset+limit,limit,src) if offset<c else None
             prv = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset-limit,limit,src) if offset>0 else None
-            return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
+            return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
         else:
+            c = sum( [a.objects.get_over_datetime(dt).count() for a in ops if a] )
             acum = 0
-            for i in range(0,len(ops)):
-                model, serializer = ops[i], opsSer[i]
+            for model in ops:
                 if model:
                     a = model.objects.get_over_datetime(dt)
-                    c = a.count()
-                    if  acum + offset < c: #Go all here
-                        toReturn = a[acum+offset:acum+offset+limit]
-                        ser = serializer(toReturn,many=True)
-                        pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
-                        nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,offset+limit,limit,src) if offset<c else None
-                        prv = "%s?time=%s&offset=%s&limit=%ss"%(pth,time,offset-limit,limit,src) if offset>0 else None
-                        return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
+                    cc = a.count()
+                    print(cc)
+                    if acum+cc < offset: 
+                        acum += cc
+                        continue
                     else:
-                        acum += offset
+                        toReturn = a[offset:offset+limit]
+                        nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset+limit,limit)
+                        prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit)
+                        return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
+                
+            prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit,limit)
+            return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
 
-            return return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
 
         return Response({"MSG":dt})
 

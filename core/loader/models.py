@@ -144,6 +144,8 @@ class Banamex(models.Model):
     Estado = models.ForeignKey(Estado)
     objects = BanamexManager()
 
+    def getAmount(self): return self.Monto
+    
     @staticmethod
     def getFecha(fecha,hora): #aaaammdd, hhmm
         fecha = str(fecha)
@@ -165,6 +167,8 @@ class Soriana(models.Model):
     Monto = models.DecimalField(max_digits=16, decimal_places=8)
     Estado = models.ForeignKey(Estado)
     objects = SorianaManager()
+
+    def getAmount(self): return self.Monto
 
     @staticmethod
     def getFecha(fecha): #aaaa-mm-dd hh:mmtt EJ. 20161211   2:00AM
@@ -189,6 +193,7 @@ class Telmex(models.Model):
     Porcentaje = models.DecimalField(max_digits=8, decimal_places=4) #Por monto acumulado...wtf?
     objects = TelmexManager()
 
+    def getAmount(self): return self.Importe
     class Meta:
         unique_together = (("Fecha", "Estado"),)
         get_latest_by = 'Fecha'
