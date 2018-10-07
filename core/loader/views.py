@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from django.utils import timezone
 from datetime import datetime
 from random import randint
+from datetime import timedelta  
 
 FILE_HEADER = "fisier"
 
@@ -174,11 +175,31 @@ class MapViewSet(APIView):
         return Response({"MSG":dt})
 
 
-class SourcesViewSet(APIView):
+class TimeIntervalsViewSet(APIView):
     def get(self,request):
         ops    = [Banamex,FarmaciaAhorro,None,Soriana,None,None,Telmex]
-        # for op in ops:
-        #     Banamex.
+        interv = timedelta(minutes=10) #Interval
+        toRet = {}
+        for op in ops:
+            toRet[op.__name__] = []
+
+            _min = op.objects.earliest().Fecha
+            _max = op.objects.latest().Fecha
+
+            print(_max - _min)
+
+            temp = _min + interv
+            c = op.objects.filter( Fecha__gte=_min , Fecha__lte=temp )
+            toRet[op.__name__].append( (_min, c.aggregate(Sum('Monto'))["Monto__sum"]  ) )
+            
+            while len(c) > 0:
+                _min = temp
+                temp = _min + interv
+                c = op.objects.filter( Fecha__gte=_min , Fecha__lte=temp )
+                toRet[op.__name__].append( (_min, c.aggregate(Sum('Monto'))["Monto__sum"]  ) )
+
+            #Let it happen for all the others
+            return Response(toRet)            
 
 #Missing
 class SourcesViewSet(APIView):
@@ -222,7 +243,12 @@ class SourcesViewSet(APIView):
         
         return Response(toRet)
 
+
 #ViewSets
+class IncomeViewSet(viewsets.ModelViewSet):
+    serializer_class = IncomeSerializer
+    queryset = Income.objects.all()
+
 class FarmaciaAhorroViewSet(viewsets.ModelViewSet):
     serializer_class = FarmaciaAhorroSerializer
     queryset = FarmaciaAhorro.objects.all()

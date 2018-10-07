@@ -37,3 +37,9 @@ class EstadoSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Estado
         fields = '__all__'
+
+class IncomeSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = Income
+        fields = '__all__'
+        depth=1

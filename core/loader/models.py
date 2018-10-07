@@ -8,8 +8,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 from datetime import datetime
+from django.db.models.signals import pre_save, post_save
 # from django.contrib.auth import get_user_model
 import json
+from django.db.models.aggregates import Count
 from django.db.models import Sum
 from collections import defaultdict
 from random import randint
@@ -287,6 +289,12 @@ class Pacientes(models.Model):
     DS_LOGROS = models.CharField(max_length=1000,verbose_name='logros', blank=True, null=True)
     DS_TESTIMONIO = models.CharField(max_length=1000,verbose_name='testimonios', blank=True, null=True)
 
+class CentrosManager(models.Manager):
+    def getNextToFund(self):
+        count = self.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count - 1)
+        return self.all()[random_index]
+
 class Centros(models.Model):
     name = models.CharField(max_length=50) 
     required = models.BigIntegerField(verbose_name='Recursos necesarios 2018')
@@ -299,6 +307,23 @@ class Centros(models.Model):
     amount_help = models.IntegerField(verbose_name='Numero de pacientes por cubrir con donativos')
     lat = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
     lng = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
+    objects = CentrosManager()
 
     def __str__(self):
         return self.name
+
+class Income(models.Model):
+    Fecha    = models.DateTimeField(auto_now=False) #fecha y hora
+    Monto    = models.DecimalField(max_digits=15, decimal_places=4)
+    Location = models.ForeignKey(Estado)
+    Centro   = models.ForeignKey(Centros)
+
+@receiver(pre_save, sender=Telmex)
+def pre_save_handler(sender,instance, *args, **kwargs):
+    previous = Telmex.objects.filter(Estado=instance.Estado).latest() #Telmex es acumulado
+    monto = instance.Importe  - previous.Importe 
+    calls = instance.Llamadas - previous.Llamadas
+    if monto > 0 and calls > 0: #Alguien dono
+        monto /= calls          
+        for _ in range(calls):
+            Income(Monto=monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund()).save()
