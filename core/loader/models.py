@@ -199,14 +199,14 @@ class Telmex(models.Model):
         get_latest_by = 'Fecha'
 
 class Pacientes(models.Model):
-    FL_PACIENTE = models.BigIntegerField(primary_key=True,verbose_name='id') 
+    FL_PACIENTE = models.BigIntegerField() 
     NB_ALIAS = models.CharField(max_length=40,verbose_name='alias') 
     EDAD = models.CharField(max_length=10,verbose_name='edad')
     NB_ENFERMEDAD = models.CharField(max_length=255,verbose_name='enfermedad')
     #Egresos
     CL_ESTATUS = models.CharField(max_length=1,verbose_name='estatus', blank=True, null=True)
     DS_LOGROS = models.CharField(max_length=1000,verbose_name='logros', blank=True, null=True)
-    DS_TESTIMONIOS = models.CharField(max_length=1000,verbose_name='testimonios', blank=True, null=True)
+    DS_TESTIMONIO = models.CharField(max_length=1000,verbose_name='testimonios', blank=True, null=True)
 
 class Centros(models.Model):
     name = models.CharField(max_length=50) 

@@ -137,8 +137,6 @@ class MapViewSet(APIView):
                 
             prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit)
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
-
-
         return Response({"MSG":dt})
 
 class SourcesViewSet(APIView):
