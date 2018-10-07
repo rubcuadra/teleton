@@ -126,17 +126,16 @@ class MapViewSet(APIView):
                 if model:
                     a = model.objects.get_over_datetime(dt)
                     cc = a.count()
-                    print(cc)
                     if acum+cc < offset: 
                         acum += cc
                         continue
                     else:
-                        toReturn = a[offset:offset+limit]
+                        toReturn = a[offset-acum:offset-acum+limit]
                         nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset+limit,limit)
                         prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit)
                         return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
                 
-            prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit,limit)
+            prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit)
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
 
 
