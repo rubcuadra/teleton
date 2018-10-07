@@ -106,7 +106,8 @@ class Estado(models.Model):
         }[estadoTelmex]
 
 class BanamexManager(models.Manager):
-    def get_total_amount(self): return self.aggregate(Sum('Monto'))["Monto__sum"]
+    def get_over_datetime(self,dt): return self.filter(Fecha__gt=dt) #Newer
+    def get_total_amount(self):     return self.aggregate(Sum('Monto'))["Monto__sum"]
 
 class Banamex(models.Model):
     MEDIO_CHOICE = (\
@@ -151,6 +152,9 @@ class Banamex(models.Model):
         return datetime(*[int(k) for k in o])
     
 class SorianaManager(models.Manager):
+    def get_over_datetime(self,dt):
+        return self.filter(Fecha__gt=dt) #Newer
+
     def get_total_amount(self): 
         return self.aggregate(Sum('Monto'))["Monto__sum"]
     
@@ -170,6 +174,9 @@ class Soriana(models.Model):
         unique_together = (("Fecha", "Tienda"),)
 
 class TelmexManager(models.Manager):
+    def get_over_datetime(self,dt):
+        return self.filter(Fecha__gt=dt) #Newer
+
     def get_total_amount(self): 
         newest = self.filter(Fecha=self.latest().Fecha)
         return sum(n.Importe for n in newest)

@@ -9,6 +9,7 @@ from .serializers import *
 from codecs import EncodedFile, BOM_UTF8
 import csv
 from bs4 import BeautifulSoup
+from django.utils import timezone
 from datetime import datetime
 
 FILE_HEADER = "fisier"
@@ -102,10 +103,32 @@ class SorianaUploadViewSet(APIView):
 
 class MapViewSet(APIView):
     def get(self,request):
-        
-        print(self.kwargs)
-        
-        return Response({"MSG":"KK"})
+        src = self.request.query_params.get("src")
+        time = self.request.query_params.get("time")
+        offset = int(self.request.query_params.get("offset",0))
+        limit = int(self.request.query_params.get("limit",500))
+        if not time: return Response({"msg":"WRONG PARAMS, must send time"}, status=status.HTTP_400_BAD_REQUEST)
+        dt = timezone.make_aware( datetime.fromtimestamp(int( time )) , timezone.utc) 
+        ops    = [Banamex,None,None,Soriana,None,None,Telmex]
+        opsSer = [BanamexSerializer,None,None,SorianaSerializer,None,None,TelmexSerializer]
+        if src:
+            model, serializer = ops[int(src)], opsSer[int(src)]
+            a = model.objects.get_over_datetime(dt)
+            c = a.count()
+            toReturn = a[offset:offset+limit]
+            ser = serializer(toReturn,many=True)
+            pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
+            nxt = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset+limit,limit,src) if offset<c else None
+            prv = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset-limit,limit,src) if offset>0 else None
+            return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
+        else:
+            ts = []
+            for model in ops: #Join from alll the models
+                # ts.append(  )
+                pass
+            return Response(ts)
+
+        return Response({"MSG":dt})
 
 class SourcesViewSet(APIView):
     def get(self,request):
