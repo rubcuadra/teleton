@@ -250,7 +250,8 @@ class FarmaciaAhorro(models.Model):
 
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
-
+        get_latest_by = 'Fecha'
+        
 class TelmexManager(models.Manager):
     def get_over_datetime(self,dt):
         return self.filter(Fecha__gt=dt) #Newer

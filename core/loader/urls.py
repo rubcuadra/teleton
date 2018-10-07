@@ -10,6 +10,7 @@ router.register(r'centros', CentrosViewSet,"Centros")
 router.register(r'pacientes', PacientesViewSet,"Pacientes")
 router.register(r'estados', EstadoViewSet,"Estados")
 router.register(r'telmex', TelmexViewSet,"Telmex")
+router.register(r'fahorro', FarmaciaAhorroViewSet,"FarmaciaAhorro")
 
 urlpatterns = [
 	url(r'^', include(router.urls), name='Loader'), 

@@ -3,9 +3,10 @@ from requests import post
 from glob import glob
 
 if __name__ == '__main__':
-	current = "Banamex"
+	current = "Farmacias del Ahorro"
+	endpoint = "fahorro"
 	
-	url = f"http://localhost:8000/api/v1/upload/{current.lower()}/"
+	url = f"http://localhost:8000/api/v1/upload/{endpoint}/"
 	folder = f"2016/{current}"
 
 	for f in glob(f"{folder}/*.txt"):

@@ -183,8 +183,8 @@ class SourcesViewSet(APIView):
         },{
             "id":1,
             "name":"Farmacias del Ahorro",
-            "total": 0,
-            "amount": 0
+            "total": FarmaciaAhorro.objects.all().count(),
+            "amount": FarmaciaAhorro.objects.get_total_amount()
         },{
             "id":2,
             "name":"Infinitum",
@@ -203,8 +203,8 @@ class SourcesViewSet(APIView):
         },{
             "id":5,
             "name":"Telecomm",
-            "total": 0,
-            "amount": 0
+            "total": 35528,
+            "amount": 3723528.03
         },{
             "id":6,
             "name":"Telmex",
@@ -215,6 +215,10 @@ class SourcesViewSet(APIView):
         return Response(toRet)
 
 #ViewSets
+class FarmaciaAhorroViewSet(viewsets.ModelViewSet):
+    serializer_class = FarmaciaAhorroSerializer
+    queryset = FarmaciaAhorro.objects.all()
+
 class BanamexViewSet(viewsets.ModelViewSet):
     serializer_class = BanamexSerializer
     queryset = Banamex.objects.all()
