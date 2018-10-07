@@ -132,10 +132,10 @@ class MapViewSet(APIView):
                     else:
                         toReturn = a[offset-acum:offset-acum+limit]
                         nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset+limit,limit)
-                        prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit)
+                        prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit) if acum+offset-limit>0 else None
                         return Response({"count":c,"next":nxt,"prev":prv,"data":[{"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
                 
-            prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit)
+            prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit) if c-limit+1>0 else None
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
         return Response({"MSG":dt})
 
