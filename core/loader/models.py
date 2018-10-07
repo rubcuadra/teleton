@@ -198,6 +198,9 @@ class Banamex(models.Model):
     def getAmount(self): return self.Monto
     
     @staticmethod
+    def SumAmount(c): return c.aggregate(Sum('Monto'))["Monto__sum"]
+
+    @staticmethod
     def getFecha(fecha,hora): #aaaammdd, hhmm
         fecha = str(fecha)
         hora = str(hora)
@@ -223,6 +226,9 @@ class Soriana(models.Model):
     objects = SorianaManager()
 
     def getAmount(self): return self.Monto
+
+    @staticmethod
+    def SumAmount(c): return c.aggregate( Sum('Monto') )["Monto__sum"]
 
     @staticmethod
     def getFecha(fecha): #aaaa-mm-dd hh:mmtt EJ. 20161211   2:00AM
@@ -253,6 +259,9 @@ class FarmaciaAhorro(models.Model):
     def getAmount(self): return self.Importe
     
     @staticmethod
+    def SumAmount(c): return c.aggregate( Sum('Importe') )["Importe__sum"]
+    
+    @staticmethod
     def getFecha(fecha): #2016-12-09 23:44
         return datetime.strptime(fecha,"%Y-%m-%d %H:%M") 
 
@@ -277,6 +286,10 @@ class Telmex(models.Model):
     objects = TelmexManager()
 
     def getAmount(self): return self.Importe
+
+    @staticmethod
+    def SumAmount(c): return c.aggregate( Sum('Importe') )["Importe__sum"]
+
     class Meta:
         unique_together = (("Fecha", "Estado"),)
         get_latest_by = 'Fecha'

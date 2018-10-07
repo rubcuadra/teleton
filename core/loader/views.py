@@ -177,30 +177,39 @@ class MapViewSet(APIView):
 
 
 class TimeIntervalsViewSet(APIView):
-    def get(self,request):
+    def get(self,request): #FIx acumulative data such as Telmex
         ops    = [Banamex,FarmaciaAhorro,None,Soriana,None,None,Telmex]
-        interv = timedelta(minutes=10) #Interval
+        interv = timedelta(minutes=60) #Interval
         toRet = {}
         for op in ops:
-            toRet[op.__name__] = []
+            if op:
+                toRet[op.__name__] = []
 
-            _min = op.objects.earliest().Fecha
-            _max = op.objects.latest().Fecha
+                _min = op.objects.earliest().Fecha
+                _max = op.objects.latest().Fecha
 
-            print(_max - _min)
+                print(_max - _min)
 
-            temp = _min + interv
-            c = op.objects.filter( Fecha__gte=_min , Fecha__lte=temp )
-            toRet[op.__name__].append( (_min, c.aggregate(Sum('Monto'))["Monto__sum"]  ) )
-            
-            while len(c) > 0:
-                _min = temp
                 temp = _min + interv
                 c = op.objects.filter( Fecha__gte=_min , Fecha__lte=temp )
-                toRet[op.__name__].append( (_min, c.aggregate(Sum('Monto'))["Monto__sum"]  ) )
+                toRet[op.__name__].append( (_min, op.SumAmount(c)  ) )
+                ix = 0
+                mx = float("-inf")
+                while temp<_max:
+                    _min = temp
+                    temp = _min + interv
+                    c = op.objects.filter( Fecha__gte=_min , Fecha__lte=temp )
+                    
+                    toRet[op.__name__].append( (_min, op.SumAmount(c)  ) )
 
-            #Let it happen for all the others
-            return Response(toRet)            
+                    if mx < toRet[op.__name__][-1][1]:
+                        mx  = toRet[op.__name__][-1][1]
+                        mxi = ix
+
+                    ix+=1
+                #MAX FOR THAT ONE 
+                #print(mxi,mx,toRet[op.__name__][mxi])
+        return Response(toRet)            
 
 #Missing
 class SourcesViewSet(APIView):
