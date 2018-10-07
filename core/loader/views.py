@@ -173,6 +173,7 @@ class MapViewSet(APIView):
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
         return Response({"MSG":dt})
 
+#Missing
 class SourcesViewSet(APIView):
     def get(self,request):
         toRet = [{
