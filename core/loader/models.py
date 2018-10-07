@@ -249,6 +249,8 @@ class FarmaciaAhorro(models.Model):
     Estado = models.ForeignKey(Estado)
 
     objects = FarmaciaAhorroManager()
+
+    def getAmount(self): return self.Importe
     
     @staticmethod
     def getFecha(fecha): #2016-12-09 23:44
@@ -322,6 +324,22 @@ class Income(models.Model):
 @receiver(pre_save, sender=Telmex)
 def pre_save_handler(sender,instance, *args, **kwargs):
     previous = Telmex.objects.filter(Estado=instance.Estado).latest() #Telmex es acumulado
+    monto = instance.Importe  - previous.Importe 
+    calls = instance.Llamadas - previous.Llamadas
+    if monto > 0 and calls > 0: #Alguien dono
+        Income(Monto=monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund(), By=calls).save()
+
+@receiver(post_save, sender=Banamex)
+def post_save_handler(sender,instance, *args, **kwargs):
+    Income( Monto=instance.Monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund() ).save()
+
+@receiver(post_save, sender=Soriana)
+def post_save_handler(sender,instance, *args, **kwargs):
+    Income( Monto=instance.Monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund(), By=instance.Donadores ).save()
+
+@receiver(pre_save, sender=FarmaciaAhorro)
+def pre_save_handler(sender,instance, *args, **kwargs):
+    previous = FarmaciaAhorro.objects.filter(Estado=instance.Estado).latest() #Telmex es acumulado
     monto = instance.Importe  - previous.Importe 
     calls = instance.Llamadas - previous.Llamadas
     if monto > 0 and calls > 0: #Alguien dono

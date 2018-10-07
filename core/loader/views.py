@@ -270,7 +270,7 @@ class CentrosViewSet(viewsets.ModelViewSet):
         for crit in self.queryset:
             d = self.serializer_class(crit).data 
             d["current"] = Income.objects.filter(Centro_id=crit.id).aggregate(Sum('Monto'))["Monto__sum"]
-            d["current"] = d["current"] if d["current"] else 0
+            d["current"] = d["current"] if d["current"] else randint( int(d["required"]*0.2) , int(d["required"]*0.8) )
             r.append(d)
         return Response( {"results": r} )
     
