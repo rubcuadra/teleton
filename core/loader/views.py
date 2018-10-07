@@ -122,11 +122,23 @@ class MapViewSet(APIView):
             prv = "%s?time=%s&offset=%s&limit=%s&src=%s"%(pth,time,offset-limit,limit,src) if offset>0 else None
             return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
         else:
-            ts = []
-            for model in ops: #Join from alll the models
-                # ts.append(  )
-                pass
-            return Response(ts)
+            acum = 0
+            for i in range(0,len(ops)):
+                model, serializer = ops[i], opsSer[i]
+                if model:
+                    a = model.objects.get_over_datetime(dt)
+                    c = a.count()
+                    if  acum + offset < c: #Go all here
+                        toReturn = a[acum+offset:acum+offset+limit]
+                        ser = serializer(toReturn,many=True)
+                        pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
+                        nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,offset+limit,limit,src) if offset<c else None
+                        prv = "%s?time=%s&offset=%s&limit=%ss"%(pth,time,offset-limit,limit,src) if offset>0 else None
+                        return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
+                    else:
+                        acum += offset
+
+            return return Response({"count":c,"next":nxt,"prev":prv,"data":ser.data})
 
         return Response({"MSG":dt})
 
