@@ -11,6 +11,7 @@ import csv
 from bs4 import BeautifulSoup
 from django.utils import timezone
 from datetime import datetime
+from random import randint
 
 FILE_HEADER = "fisier"
 
@@ -63,6 +64,46 @@ class TelmexUploadViewSet(APIView):
                     if ts.is_valid(): ts.save()
             return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)    
+
+class FarmaciasAhorroUploadViewSet(APIView):
+    def fix(self,row):
+        row["Fecha"] = Banamex.getFecha(row["Fecha"],row["Hora"])
+        del row["Hora"] #Useless
+        return row
+
+    def post(self,request):
+        if FILE_HEADER in request.FILES:
+            f = request.FILES[FILE_HEADER]
+            if f:
+                skip = 1
+                line = ""
+                for x in f.read():
+                    if x == '\x00' or x == "\r": continue #Tiene basura
+                    if x == "\n" : #BreakLine
+                        if skip <= 0: #Saltar headers
+                            #SAVE O HACER ALGO AQUI CON ESA LINE    
+                            record = line.split(",")
+
+                            ss = FarmaciaAhorroSerializer(data={
+                                    "Fecha": FarmaciaAhorro.getFecha(record[0]),
+                                    "suc_id":int(record[1]),
+                                    "suc_nombre":record[2],
+                                    "region":record[3],
+                                    "movements": int(record[5]),
+                                    "Importe":float(record[6]),
+                                    "Estado": Estado.FarmaciaAhorroParser( record[4] ) })
+                            
+                            if ss.is_valid():
+                                ss.save()
+                            else:
+                                print(ss.errors)
+                        else:
+                            skip -= 1
+                        line = ""
+                        continue
+                    line += x
+                return Response({"msg":"OK"}, status = status.HTTP_201_CREATED)
+        return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)
 
 class SorianaUploadViewSet(APIView):
     def fix(self,row):
@@ -133,7 +174,8 @@ class MapViewSet(APIView):
                         toReturn = a[offset-acum:offset-acum+limit]
                         nxt = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset+limit,limit)
                         prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,acum+offset-limit,limit) if acum+offset-limit>0 else None
-                        return Response({"count":c,"next":nxt,"prev":prv,"data":[{"src":ix,"amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
+                        return Response({"count":c,"next":nxt,"prev":prv,"data":[{"src":randint(0,len(ops)), #ix
+                            "amount":i.getAmount(),"datetime":i.Fecha,"location": EstadoSerializer(i.Estado).data } for i in toReturn]}) 
                 
             prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit) if c-limit+1>0 else None
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
@@ -164,8 +206,8 @@ class SourcesViewSet(APIView):
         },{
             "id":4,
             "name":"Telcel",
-            "total": 0,
-            "amount": 0
+            "total": 11487,
+            "amount": 2868700.00
         },{
             "id":5,
             "name":"Telecomm",

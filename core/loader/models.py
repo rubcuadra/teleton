@@ -56,6 +56,45 @@ class Estado(models.Model):
     lng = models.DecimalField(max_digits=12, decimal_places=8)
     
     @staticmethod
+    def FarmaciaAhorroParser(estadofa):
+        return {"TUXTLA GUTIERREZ":8,
+        "VILLAHERMOSA":27,
+        "TAPACHULA":8,
+        "TOLUCA":15,
+        "OAXACA":20,
+        "MORELIA":16,
+        "CELAYA":11,
+        "LEON":11,
+        "SAN LUIS POTOSI":24,
+        "AGUASCALIENTES":2,
+        "GUADALAJARA":14,
+        "PACHUCA":13,
+        "IRAPUATO":11,
+        "PUEBLA NORTE":21,
+        "VERACRUZ":30,
+        "PUEBLA SUR":21,
+        "XALAPA":30,
+        "POZA RICA":30,
+        "ACAPULCO":12,
+        "MEXICO SUR":1,
+        "CUERNAVACA":17,
+        "MEXICO CENTRO":1,
+        "MEXICO NORTE":1,
+        "CUAUTLA":17,
+        "QUERETARO":22,
+        "MONTERREY ORIENTE":19,
+        "CANCUN":23,
+        "CAMPECHE":5,
+        "MERIDA":31,
+        "SALTILLO":6,
+        "MONCLOVA":6,
+        "CHETUMAL":23,
+        "MONTERREY PONIENTE":19,
+        "TUXTLA GTZ NORTE":8,
+        "TUXTLA GTZ SUR":8,
+        "CORDOBA":30}[estadofa]
+
+    @staticmethod
     def SorianaParser(estadoSoriana):
         SORIANA_PARSER = { 15:11,11:12, 12:13, 13:14,14:15}
         if estadoSoriana in SORIANA_PARSER: return int(SORIANA_PARSER[estadoSoriana]) 
@@ -177,6 +216,31 @@ class Soriana(models.Model):
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
 
+class FarmaciaAhorroManager(models.Manager):
+    def get_over_datetime(self,dt): return self.filter(Fecha__gt=dt) #Newer
+
+    def get_total_amount(self): 
+        newest = self.filter(Fecha=self.latest().Fecha)
+        return sum(n.Importe for n in newest)
+
+class FarmaciaAhorro(models.Model):
+    Fecha = models.DateTimeField(auto_now=False) #fecha y hora
+    Tienda = models.IntegerField()
+    suc_nombre = models.CharField(max_length=100,verbose_name='estatus', blank=True, null=True)
+    region = models.CharField(max_length=50,verbose_name='estatus', blank=True, null=True)
+    movements = models.IntegerField()
+    Importe = models.DecimalField(max_digits=16, decimal_places=8)
+    Estado = models.ForeignKey(Estado)
+
+    objects = FarmaciaAhorroManager()
+    
+    @staticmethod
+    def getFecha(fecha): #2016-12-09 23:44
+        return datetime.strptime(fecha,"%Y-%m-%d %H:%M") 
+
+    class Meta:
+        unique_together = (("Fecha", "Tienda"),)
+
 class TelmexManager(models.Manager):
     def get_over_datetime(self,dt):
         return self.filter(Fecha__gt=dt) #Newer
@@ -220,3 +284,6 @@ class Centros(models.Model):
     amount_help = models.IntegerField(verbose_name='Numero de pacientes por cubrir con donativos')
     lat = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
     lng = models.DecimalField(max_digits=12, decimal_places=8,default=0.0)
+
+    def __str__(self):
+        return self.name

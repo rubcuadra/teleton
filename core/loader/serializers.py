@@ -27,7 +27,11 @@ class TelmexSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Telmex
         fields = '__all__'
-        depth = 1
+
+class FarmaciaAhorroSerializer(serializers.ModelSerializer):
+    class Meta:    
+        model = FarmaciaAhorro
+        fields = '__all__'
 
 class EstadoSerializer(serializers.ModelSerializer):
     class Meta:    
