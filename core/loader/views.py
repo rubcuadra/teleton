@@ -66,11 +66,6 @@ class TelmexUploadViewSet(APIView):
         return Response({"msg":"WRONG FILE"}, status=status.HTTP_400_BAD_REQUEST)    
 
 class FarmaciasAhorroUploadViewSet(APIView):
-    def fix(self,row):
-        row["Fecha"] = Banamex.getFecha(row["Fecha"],row["Hora"])
-        del row["Hora"] #Useless
-        return row
-
     def post(self,request):
         if FILE_HEADER in request.FILES:
             f = request.FILES[FILE_HEADER]
@@ -86,17 +81,14 @@ class FarmaciasAhorroUploadViewSet(APIView):
 
                             ss = FarmaciaAhorroSerializer(data={
                                     "Fecha": FarmaciaAhorro.getFecha(record[0]),
-                                    "suc_id":int(record[1]),
-                                    "suc_nombre":record[2],
-                                    "region":record[3],
+                                    "Tienda":int(record[1]),
+                                    "suc_nombre":record[2].decode("ascii","ignore"),
+                                    "region":record[3].decode("ascii","ignore"),
                                     "movements": int(record[5]),
                                     "Importe":float(record[6]),
                                     "Estado": Estado.FarmaciaAhorroParser( record[4] ) })
-                            
-                            if ss.is_valid():
-                                ss.save()
-                            else:
-                                print(ss.errors)
+                            if ss.is_valid(): ss.save()
+                            else:             print(ss.errors)
                         else:
                             skip -= 1
                         line = ""
