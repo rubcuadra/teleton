@@ -317,6 +317,7 @@ class Income(models.Model):
     Monto    = models.DecimalField(max_digits=15, decimal_places=4)
     Location = models.ForeignKey(Estado)
     Centro   = models.ForeignKey(Centros)
+    By       = models.IntegerField(default=1)
 
 @receiver(pre_save, sender=Telmex)
 def pre_save_handler(sender,instance, *args, **kwargs):
@@ -324,6 +325,4 @@ def pre_save_handler(sender,instance, *args, **kwargs):
     monto = instance.Importe  - previous.Importe 
     calls = instance.Llamadas - previous.Llamadas
     if monto > 0 and calls > 0: #Alguien dono
-        monto /= calls          
-        for _ in range(calls):
-            Income(Monto=monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund()).save()
+        Income(Monto=monto,Fecha=instance.Fecha,Location=instance.Estado, Centro=Centros.objects.getNextToFund(), By=calls).save()

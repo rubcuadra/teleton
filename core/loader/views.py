@@ -7,12 +7,13 @@ from rest_framework.views import APIView
 from .models import *
 from .serializers import *
 from codecs import EncodedFile, BOM_UTF8
-import csv
+from django.db.models import Sum
 from bs4 import BeautifulSoup
 from django.utils import timezone
 from datetime import datetime
 from random import randint
 from datetime import timedelta  
+import csv
 
 FILE_HEADER = "fisier"
 
@@ -264,6 +265,14 @@ class SorianaViewSet(viewsets.ModelViewSet):
 class CentrosViewSet(viewsets.ModelViewSet):
     serializer_class = CentrosSerializer
     queryset = Centros.objects.all()
+    def list(self,request):
+        r = []
+        for crit in self.queryset:
+            d = self.serializer_class(crit).data 
+            d["current"] = Income.objects.filter(Centro_id=crit.id).aggregate(Sum('Monto'))["Monto__sum"]
+            d["current"] = d["current"] if d["current"] else 0
+            r.append(d)
+        return Response( {"results": r} )
     
 class PacientesViewSet(viewsets.ModelViewSet):
     serializer_class = PacientesSerializer
