@@ -201,6 +201,9 @@ class Banamex(models.Model):
         hora = str(hora)
         o = [ fecha[:4],fecha[4:6],fecha[6:],hora[:2],hora[2:] ]
         return datetime(*[int(k) for k in o])
+
+    class Meta:
+        get_latest_by = 'Fecha'
     
 class SorianaManager(models.Manager):
     def get_over_datetime(self,dt):
@@ -225,6 +228,7 @@ class Soriana(models.Model):
         
     class Meta:
         unique_together = (("Fecha", "Tienda"),)
+        get_latest_by = 'Fecha'
 
 class FarmaciaAhorroManager(models.Manager):
     def get_over_datetime(self,dt): return self.filter(Fecha__gt=dt) #Newer

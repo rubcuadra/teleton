@@ -143,7 +143,7 @@ class MapViewSet(APIView):
         if not time: return Response({"msg":"WRONG PARAMS, must send time"}, status=status.HTTP_400_BAD_REQUEST)
         dt = timezone.make_aware( datetime.fromtimestamp(int( time )) , timezone.utc) 
         pth = "%s://%s%s"%(request.scheme,request.META['HTTP_HOST'],request.path)
-        ops    = [Banamex,None,None,Soriana,None,None,Telmex]
+        ops    = [Banamex,FarmaciaAhorro,None,Soriana,None,None,Telmex]
         if src:
             model = ops[int(src)]
             a = model.objects.get_over_datetime(dt)
@@ -172,6 +172,13 @@ class MapViewSet(APIView):
             prv = "%s?time=%s&offset=%s&limit=%s"%(pth,time,c-limit+1,limit) if c-limit+1>0 else None
             return Response({"count":c,"next":None,"prev":prv,"data":[]}) 
         return Response({"MSG":dt})
+
+
+class SourcesViewSet(APIView):
+    def get(self,request):
+        ops    = [Banamex,FarmaciaAhorro,None,Soriana,None,None,Telmex]
+        # for op in ops:
+        #     Banamex.
 
 #Missing
 class SourcesViewSet(APIView):
@@ -205,12 +212,12 @@ class SourcesViewSet(APIView):
             "id":5,
             "name":"Telecomm",
             "total": 35528,
-            "amount": 3723528.03
+            "amount": 912555.089
         },{
             "id":6,
             "name":"Telmex",
-            "total": Telmex.objects.all().count(),
-            "amount": Telmex.objects.get_total_amount()
+            "total": sum([n.Llamadas for n in Telmex.objects.filter(Fecha=Telmex.objects.latest().Fecha)]), #94898
+            "amount": Telmex.objects.get_total_amount() #31042350 
         }]
         
         return Response(toRet)
